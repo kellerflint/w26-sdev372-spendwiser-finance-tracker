@@ -3,5 +3,8 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "mysql2": "^3.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.7"
   }
 }
