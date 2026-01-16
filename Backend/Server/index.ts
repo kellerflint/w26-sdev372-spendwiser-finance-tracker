@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./db";
+import expensesRouter from "./routes/expenses";
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ app.get("/api/health", async (_req, res) => {
     res.status(500).json({ status: "error", message: "DB connection failed" });
   }
 });
+
+app.use("/expenses", expensesRouter);
 
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);

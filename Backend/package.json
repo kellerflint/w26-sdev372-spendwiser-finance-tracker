@@ -2,7 +2,7 @@
   "name": "spendwiser-backend",
   "version": "1.0.0",
   "scripts": {
-    "dev": "ts-node index.ts"
+    "dev": "ts-node Server/index.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
