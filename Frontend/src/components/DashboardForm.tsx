@@ -11,6 +11,7 @@ export default function DashboardForm(){
     const [amount, setAmount] = useState("");
     const [location, setLocation] = useState("");
     const [date, setDate] = useState("");
+    const [description, setDescription] = useState("");
 
     return(
     <div>
@@ -51,6 +52,15 @@ export default function DashboardForm(){
                 onChange={(e) => setDate(e.target.value)}
                 />
         </div>
+    <div>
+        <label>Description</label>
+        <textarea
+         value={description}
+         onChange={(e) => setDescription(e.target.value)}
+        rows={6}
+        cols={30}
+    />
+    </div>
     </div>
     )
 }
