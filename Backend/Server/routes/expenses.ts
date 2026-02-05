@@ -16,7 +16,7 @@ router.get("/", async (_req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { hobby, description, location, amount, expense_date } = req.body;
+  const { hobby, description, location, amount, expense_date, image_path } = req.body;
 
   if (!hobby || !amount || !expense_date) {
     return res.status(400).json({ error: "Missing required fields" });
@@ -24,9 +24,9 @@ router.post("/", async (req, res) => {
 
   try {
     await pool.query(
-      `INSERT INTO expenses (hobby, description, location, amount, expense_date)
-       VALUES (?, ?, ?, ?, ?)`,
-      [hobby, description, location, amount, expense_date]
+      `INSERT INTO expenses (hobby, description, location, amount, expense_date, image_path)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [hobby, description, location, amount, expense_date, image_path]
     );
 
     res.sendStatus(201);
