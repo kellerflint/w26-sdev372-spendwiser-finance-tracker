@@ -14,6 +14,7 @@ type Expense = {
   location: string | null;
   amount: number;
   expense_date: string;
+  image_path: string | null;
   created_at: string;
 };
 
@@ -24,7 +25,8 @@ export default function DashboardForm(){
     const [date, setDate] = useState("");
     const [description, setDescription] = useState("");
     const [expenses, setExpenses] = useState<Expense[]>([]);
-
+    const [image, setImage] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
     async function submitExpense() {
         if (!category || !amount || !date) return;
 
@@ -36,6 +38,7 @@ export default function DashboardForm(){
                 description,
                 location,
                 amount,
+                image_path: image ? URL.createObjectURL(image) : null,
                 expense_date: date,
             }),
     });
@@ -46,6 +49,8 @@ export default function DashboardForm(){
     setAmount("");
     setDate("");
     setDescription("");
+    setImage(null);
+    setImagePreview(null);
   }
 
   async function fetchExpenses() {
@@ -119,6 +124,7 @@ return (
         <main className="center">
           <div className="image-drop">
             Drop Product Image or Receipt here
+            {imagePreview && <img src={imagePreview} alt="Preview" />}
           </div>
 
           <textarea
