@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import "../App.css";
+import { useDropzone } from "react-dropzone";
 
 const Categories = [
     { id: "surplus", label: "Surplus"},
@@ -14,6 +15,7 @@ type Expense = {
   location: string | null;
   amount: number;
   expense_date: string;
+  image_path: string | null;
   created_at: string;
 };
 
@@ -24,21 +26,21 @@ export default function DashboardForm(){
     const [date, setDate] = useState("");
     const [description, setDescription] = useState("");
     const [expenses, setExpenses] = useState<Expense[]>([]);
-
+    const [image, setImage] = useState<File[] | null>(null);
     async function submitExpense() {
         if (!category || !amount || !date) return;
+        const formData = new FormData();
+        formData.append("hobby", category);
+        formData.append("description", description);
+        formData.append("location", location);
+        formData.append("amount", amount);
+        formData.append("expense_date", date);
+        if (image) formData.append("image", image[0]);
 
         await fetch("http://localhost:3001/expenses", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                hobby: category,
-                description,
-                location,
-                amount,
-                expense_date: date,
-            }),
-    });
+            body: formData,
+        });
 
     fetchExpenses();
 
@@ -46,6 +48,7 @@ export default function DashboardForm(){
     setAmount("");
     setDate("");
     setDescription("");
+    setImage(null);
   }
 
   async function fetchExpenses() {
@@ -57,6 +60,14 @@ export default function DashboardForm(){
   useEffect(() => {
     fetchExpenses();
   }, []);
+
+  const { getRootProps, getInputProps, isDragActive} = useDropzone({
+      onDrop: useCallback((images: File[]) => {
+          setImage(images);
+      }, []),
+  })
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/';
 
 return (
     <div className="dashboard-wrapper">
@@ -111,6 +122,8 @@ return (
               <div>{e.hobby}</div>
               <div>${e.amount}</div>
               <small>{e.expense_date}</small>
+              <div>{e.description}</div>
+              {e.image_path && <img src={`${API_BASE_URL}${e.image_path}`}></img>}
             </div>
           ))}
         </aside>
@@ -118,7 +131,17 @@ return (
         {/* CENTER */}
         <main className="center">
           <div className="image-drop">
-            Drop Product Image or Receipt here
+            <div {...getRootProps()} className="dropzone">
+                <input {...getInputProps()} />
+            {isDragActive ? (
+                <p>Drop the files here ...</p>
+            ) : (
+                <p>Drag and drop some files here, or click to select files</p>
+            )}
+            </div>
+            {image && image.length > 0 && (
+                <img src={URL.createObjectURL(image[0])} alt="Preview" />
+            )}
           </div>
 
           <textarea
