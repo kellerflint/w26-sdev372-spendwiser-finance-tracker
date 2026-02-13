@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8
+    container_name: spendwiser-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: spendwiser
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./Backend/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+  backend:
+    build: ./Backend
+    container_name: spendwiser-backend
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: spendwiser
+      DB_PORT: 3306
+    depends_on:
+      - db
+
+  frontend:
+    build: ./Frontend
+    container_name: spendwiser-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
