@@ -86,12 +86,6 @@ return (
       <div className="nav-left">
         <h1 className="app-title">Hobbyist Tracker</h1>
       </div>
-
-      <div className="nav-right">
-        <button className="nav-btn">Dashboard</button>
-        <button className="nav-btn">History</button>
-        <button className="nav-btn">Goals</button>
-      </div>
     </nav>
  {/* PAGE CONTENT */}
     <div className="dashboard-wrapper">
@@ -184,10 +178,10 @@ return (
           <div className="chart-placeholder"></div>
         </aside>
       </div>
-
-      {/* FOOTER */}
-      <footer className="footer">Footer</footer>
     </div>
-   </div>
+   
+      {/* FOOTER */}
+      <footer className="footer">Hobbyist Tracker © 2026</footer>
+    </div>
   );
 }
