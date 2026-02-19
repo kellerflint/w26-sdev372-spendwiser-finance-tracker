@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import pool from "./db";
 import expensesRouter from "./routes/expenses";
 import path from "path";
+import categories from "./routes/categories"
 
 dotenv.config();
 
@@ -26,7 +27,7 @@ app.get("/api/health", async (_req, res) => {
 
 app.use("/expenses", expensesRouter);
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
-
+app.use("/categories", categories)
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);
 });
