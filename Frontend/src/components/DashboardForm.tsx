@@ -6,6 +6,16 @@ const Categories = [
     { id: "surplus", label: "Surplus"},
     { id: "keyboards", label: "Keyboards"},
     { id: "gym", label: "Gym"},
+    { id: "groceries", label: "Groceries" },
+    { id: "car_parts", label: "Car Parts" },
+    { id: "computer_hardware", label: "Computer Hardware" },
+    { id: "gaming_mice", label: "Gaming Mice" },
+    { id: "rent", label: "Rent" },
+    { id: "utilities", label: "Utilities" },
+    { id: "transportation", label: "Transportation" },
+    { id: "entertainment", label: "Entertainment" },
+    { id: "subscriptions", label: "Subscriptions" },
+    { id: "other", label: "Other" }
 ];
 
 type Expense = {
@@ -70,6 +80,14 @@ export default function DashboardForm(){
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/';
 
 return (
+    <div className="app-container">
+      {/* Navbar */}
+      <nav className="navbar">
+      <div className="nav-left">
+        <h1 className="app-title">Hobbyist Tracker</h1>
+      </div>
+    </nav>
+ {/* PAGE CONTENT */}
     <div className="dashboard-wrapper">
       {/* TOP ROW */}
       <div className="top-row">
@@ -84,6 +102,7 @@ return (
             ))}
           </select>
         </div>
+       
 
         <div className="field">
           <label>$ Spent</label>
@@ -159,9 +178,10 @@ return (
           <div className="chart-placeholder"></div>
         </aside>
       </div>
-
+    </div>
+   
       {/* FOOTER */}
-      <footer className="footer">Footer</footer>
+      <footer className="footer">Hobbyist Tracker © 2026</footer>
     </div>
   );
 }
