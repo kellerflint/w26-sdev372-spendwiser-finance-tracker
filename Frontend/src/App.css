@@ -134,6 +134,36 @@ html, body, #root {
   background: #187a6b;
 }
 
+.button-style
+{
+  background-color: #dd7373;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.button-container
+{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ImageanButton-Container {
+  display: flex;
+  align-items: center;      /* keeps button level with image */
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.ImageanButton-Container img {
+  width: 60px;
+  height: auto;
+}
+
 .nav-btn:hover {
   background: #e6fff7;
   transform: translateY(-1px);
@@ -144,6 +174,23 @@ html, body, #root {
   background: #e5e7eb;
   border-radius: 8px;
 }
+
+/*Chart container*/
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+}
+
+.total-spent {
+  margin-top: 10px;
+  text-align: center;
+
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
 
 /*Footer */
 .footer {

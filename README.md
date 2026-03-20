@@ -32,6 +32,13 @@
 ## Wireframe
 ![WireFrame-Picture](WireFrame.png)
 
+# Docker Deployment
+- Have docker installed & running
+- Run `docker compose up -d --build` at the root of the project
+- Docker will take over and build the two dockerfiles located in the frontend & backend
+- Frontend Port: `localhost:5173`
+- Backend Port: `localhost:3001` - `/api/health` - `/expenses`
+
 # MVP for Sprint 2 Deliverable (Xavier & Jacob)
 
 - Add ability to upload images
@@ -72,3 +79,37 @@
     - Format times to be easier to read when they are added to the finace history
 - **Look into Finance Chart**
     - Look into creating a pie chart that counts the spending for a product
+
+# Testing Requirements for Spendwiser
+- FE tests: Verify users are able to view and interact with the SPA
+    - Use **vitest** for testing
+    - Ensure SPA renders to the user
+    - Verify users are able to enter into the input boxes
+- BE tests: Verify the /expenses route correctly returns stored expenses and accepts new expense submissions
+    - Use **Jest** or **supertest** for testing
+    - Ensure **/expenses** correctly sends expense data
+    - Ensure **/expenses** returns stored expense data
+- Ensure **/expenses** accepts new expense data
+    - Integration tests: Verify that the /expenses API correctly interacts with the database.
+    - Use Jest or supertest for testing
+    - Verify the **/expenses** API correctly stores data
+    - Verify the **/expenses** API correclty retrieves data
+- E2E tests: Verify full functionality of the SPA
+    - Use **playwright** or **cypress** for testing
+    - Verify users can submit **data/expenses** through the UI
+    - Verify data appears on UI
+
+# MVP for Sprint 5 Deliverable (Tim & Jesse)
+- **Time Format**: The time format when entering data is hard to read and distugish an actual time
+    - Trim extra uneeded numbers and letters from format
+    - Organize under data section more properly
+- **Data Graph/Chart**: Find and use a chart to display money savings and money spent on the main dashboard/SPA
+    - Learning Spike: Find a graphing/charting library to use
+    - Display a small graph/chart of savings for users to view
+- **CSS Styling**: Verify styles are good and fully ironed out
+    - (maybe) move entire entry box and dashboard to be in the center of the screen when rendered
+    - Add small shadow details
+    - Add small effect details
+- **Style Delete Button**: Our partners recently added a new feature for deleting inputs out of the DB
+    - Style the button to look more like the rest of the SPA
+    - Position could be a little better as well

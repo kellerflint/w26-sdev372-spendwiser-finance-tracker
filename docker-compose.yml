@@ -36,6 +36,38 @@ services:
     networks:
       - app-network
 
+  backend:
+    build: ./Backend
+    container_name: spendwiser-backend
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  frontend:
+    build: ./Frontend
+    container_name: spendwiser-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://backend:3001 # http://100.97.89.64:3001
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - app-network
+
   integration-tests:
     build: ./
     container_name: spendwiser-integration-tests
@@ -49,49 +81,12 @@ services:
     depends_on:
       test-db:
         condition: service_healthy
-    restart: "no"
-    networks:
-      - app-network
-
-  backend:
-    build: ./Backend
-    container_name: spendwiser-backend
-    restart: always
-    ports:
-      - "3001:3001"
-    environment:
-      DB_HOST: db
-      DB_USER: root
-      DB_PASSWORD: root
-      DB_NAME: spendwiser
-      DB_PORT: 3306
-    depends_on:
-      db:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:3001/api/health || exit 1"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-    networks:
-      - app-network
-
-  frontend:
-    build: ./Frontend
-    container_name: spendwiser-frontend
-    restart: always
-    ports:
-      - "5173:5173"
-    depends_on:
       backend:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5173/ || exit 1"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
+        condition: service_started
+      frontend:
+        condition: service_started
+    command: sh -c "echo 'Waiting for services...' && sleep 15 && npm run test:docker"
+    restart: "no"
     networks:
       - app-network
 
